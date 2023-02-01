@@ -1,24 +1,23 @@
-import 'package:filmes_app/api/filmes_api.dart';
-import 'package:filmes_app/model/filme_model.dart';
-import 'package:filmes_app/pages/details_page.dart';
+import 'package:filmes_app/presenter/details_presenter.dart';
+import 'package:filmes_app/presenter/entities/filme_entity.dart';
+import 'package:filmes_app/presenter/home_presenter.dart';
+import 'package:filmes_app/view/pages/details_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  final FilmesApi api;
-  const HomePage(this.api, {Key? key}) : super(key: key);
+  final HomePresenter presenter;
+  const HomePage(this.presenter, {Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  List<FilmeModel> filmes = [];
+  List<FilmeEntity> filmes = [];
   @override
   void initState() {
-    widget.api.getFilms().then((value) {
-      if (value.results != null) {
-        filmes = value.results!;
-      }
+    widget.presenter.getFilms().then((value) {
+      filmes = value;
       setState(() {});
     });
     super.initState();
@@ -41,7 +40,8 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => DetailsPage(filmes[index].id!),
+                    builder: (context) =>
+                        DetailsPage(filmes[index].id!, DetailsPresenter()),
                   ),
                 );
               },

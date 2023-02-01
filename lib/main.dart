@@ -1,5 +1,5 @@
-import 'package:filmes_app/api/filmes_api.dart';
-import 'package:filmes_app/pages/home_page.dart';
+import 'package:filmes_app/presenter/home_presenter.dart';
+import 'package:filmes_app/view/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(FilmesApi()),
+      home: HomePage(HomePresenter()),
     );
   }
 }

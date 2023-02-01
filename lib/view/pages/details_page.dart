@@ -1,21 +1,22 @@
-import 'package:filmes_app/api/filmes_api.dart';
-import 'package:filmes_app/model/detalhe_filme_model.dart';
+import 'package:filmes_app/presenter/details_presenter.dart';
+import 'package:filmes_app/presenter/entities/detalhe_filme_entity.dart';
 import 'package:flutter/material.dart';
 
 class DetailsPage extends StatefulWidget {
   final int moveId;
-  const DetailsPage(this.moveId, {Key? key}) : super(key: key);
+  final DetailsPresenter presenter;
+  const DetailsPage(this.moveId, this.presenter, {Key? key}) : super(key: key);
 
   @override
   State<DetailsPage> createState() => _DetailsPageState();
 }
 
 class _DetailsPageState extends State<DetailsPage> {
-  DetalheFilmeModel? filme;
+  DetalheFilmeEntity? filme;
 
   @override
   void initState() {
-    FilmesApi().filmDetails(widget.moveId).then((value) {
+    widget.presenter.filmDetails(widget.moveId).then((value) {
       filme = value;
       setState(() {});
     });
