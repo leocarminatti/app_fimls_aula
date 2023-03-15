@@ -1,5 +1,6 @@
 import 'package:filmes_app/presenter/details_presenter.dart';
 import 'package:filmes_app/presenter/entities/detalhe_filme_entity.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 
 class DetailsPage extends StatefulWidget {
@@ -13,9 +14,11 @@ class DetailsPage extends StatefulWidget {
 
 class _DetailsPageState extends State<DetailsPage> {
   DetalheFilmeEntity? filme;
+  FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
   @override
   void initState() {
+    analytics.logEvent(name: 'film_detalis');
     widget.presenter.filmDetails(widget.moveId).then((value) {
       filme = value;
       setState(() {});

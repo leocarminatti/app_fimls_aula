@@ -1,8 +1,12 @@
 import 'package:filmes_app/presenter/details_presenter.dart';
 import 'package:filmes_app/presenter/entities/filme_entity.dart';
 import 'package:filmes_app/presenter/home_presenter.dart';
+import 'package:filmes_app/presenter/login_presenter.dart';
 import 'package:filmes_app/view/pages/details_page.dart';
+import 'package:filmes_app/view/pages/login_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class HomePage extends StatefulWidget {
   final HomePresenter presenter;
@@ -30,6 +34,21 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Lista de filmes populares'),
         backgroundColor: Colors.black,
+        actions: [
+          IconButton(
+            onPressed: () {
+              GoogleSignIn().disconnect();
+              FirebaseAuth.instance.signOut();
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                  builder: (context) => LoginPage(presenter: LoginPresenter()),
+                ),
+                (_) => false,
+              );
+            },
+            icon: const Icon(Icons.logout),
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
